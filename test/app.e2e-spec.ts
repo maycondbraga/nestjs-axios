@@ -15,10 +15,13 @@ describe('AppController (e2e)', () => {
     await app.init();
   });
 
-  it('/ (GET)', () => {
+  it('/api/price/bitcoin (GET)', () => {
     return request(app.getHttpServer())
-      .get('/')
+      .get('/api/price/bitcoin')
       .expect(200)
-      .expect('Hello World!');
+      .expect((res) => {
+        const regex = /^\d{1,3}(,\d{3})*(\.\d+)?$/;
+        expect(res.text).toMatch(regex);
+      });
   });
 });
